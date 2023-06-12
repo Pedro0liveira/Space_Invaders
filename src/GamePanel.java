@@ -11,14 +11,17 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
     private Timer timer;
     private Nave nave;
+    private int nivel, qtdInimigos;
     private ArrayList<Inimigos> inimigos;
 
     public GamePanel(){
+        nivel = 1;
+        qtdInimigos = 10;
         inimigos = new ArrayList<Inimigos>();
         Random random = new Random();
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < qtdInimigos; i++)
         {
             Inimigos inimigo = new Inimigos(
                 random.nextInt(10,  screenWidth - 40),
@@ -32,16 +35,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                 }
             }
         }
-
         nave = new Nave();
         addKeyListener(this);
         setBackground(Color.BLACK);
         setSize(getPreferredSize());
         setFocusable(true);
         setLayout(null);
-       
-
-        timer = new Timer(1,this);
+        timer = new Timer(5,this);
         timer.start();
     }
     
@@ -63,29 +63,71 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         ArrayList<Tiros> removerTiros = new ArrayList<>();
         for (Tiros tiro : nave.getTiros())
         {
-            if (tiro.isVisible())
+            if (tiro.isVisible()){
                 g2d.drawImage(tiro.getImagem(), tiro.getX(), tiro.getY(), this);
-            else
+            }else{
                 removerTiros.add(tiro);
+            }
         }
         for (Tiros tiro : removerTiros) {
             nave.getTiros().remove(tiro);
         }
+        g2d.setColor(Color.WHITE);
+        g2d.drawString("Inimigos vivos: " + inimigos.size(), 5, 15);
+        g2d.drawString("Tiros: " + nave.getTiros().size(), 5, 30);
+        g2d.drawString("Nível: " + nivel, 5, 45);
     }
 
     public void checarColisoes(){
-        Rectangle nave = this.nave.getRetangulo();
+        Rectangle retanguloNave = this.nave.getRetangulo();
         for (Inimigos inimigo : inimigos) {
-            Rectangle rectangleInimigo = inimigo.getRetangulo();
-            if (nave.intersects(rectangleInimigo)) {
-                timer.stop();
+            Rectangle retanguloInimigo = inimigo.getRetangulo();
+            if (retanguloNave.intersects(retanguloInimigo)) {
+                derrota();
+            }   timer.stop();
+            
+            for (Tiros tiro : nave.getTiros()){
+                Rectangle retanguloTiro = tiro.getRetangulo();
+                if (retanguloTiro.intersects(retanguloInimigo))
+                {
+                    inimigo.setVisible(false);
+                    tiro.setVisible(false);
+                }
+            }
+        }
+    }
+    
+    private void levelUp() {
+        nivel++;
+        qtdInimigos += 2;
+        inimigos = new ArrayList<Inimigos>();
+        Random random = new Random();
+        int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+        int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+        for(int i = 0; i < qtdInimigos; i++)
+        {
+            Inimigos inimigo = new Inimigos(
+                random.nextInt(10,  screenWidth - 40),
+                random.nextInt(-screenHeight, 0)
+            );
+            inimigo.setVelocidade(inimigo.getVelocidade() + 1);
+            inimigos.add(inimigo);
+            if(i > 0){
+                if (inimigos.get(i).getRetangulo().intersects(inimigos.get(i-1).getRetangulo())){
+                    inimigos.remove(i);
+                    i--;
+                }
             }
         }
     }
 
+    public void derrota(){
+        timer.stop();
+        
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
     }
     
     @Override
@@ -142,8 +184,14 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         for (Inimigos inimigo : inimigos) {
             inimigo.mover();
         }
-
+        for (Tiros tiro : nave.getTiros()) {
+            tiro.mover();
+        }
+        if (inimigos.isEmpty()) {
+            levelUp();
+        }
         checarColisoes();
         repaint();
     }
+
 }

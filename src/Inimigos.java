@@ -27,7 +27,7 @@ public class Inimigos {
             setY(0);
     }
     public Rectangle getRetangulo() {
-        return new Rectangle(x, y, width/10, height/10);
+        return new Rectangle(x + 30, y, width/10, height/10);
     }
 
     public Image getImagem() {

@@ -13,15 +13,15 @@ public class Tiros {
         setX(x);
         setY(y);
         setVelocidade(6);
+        ImageIcon i = new ImageIcon("bullet.png");
+        setImagem(i.getImage());
+        setWidth(getImagem().getWidth(null));
+        setHeight(getImagem().getHeight(null));
     }
     
     public void mover(){
         setY(y - getVelocidade());
         setVisible(y < 0 ? false : true);
-        ImageIcon i = new ImageIcon("bullet.png");
-        setImagem(i.getImage());
-        setWidth(getImagem().getWidth(null));
-        setHeight(getImagem().getHeight(null));
     }
 
     public Rectangle getRetangulo() {

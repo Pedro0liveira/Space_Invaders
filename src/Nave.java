@@ -12,6 +12,7 @@ public class Nave {
 
     public Nave(){
         setVisible(true);
+        setTiros(new ArrayList<>());
         ImageIcon i = new ImageIcon("naveNivel1.png");
         setImagem(i.getImage());
         setWidth(getImagem().getWidth(null));
@@ -30,11 +31,11 @@ public class Nave {
     }
 
     public void atirar(){
-        getTiros().add(new Tiros(getX() + (getWidth() / 2), getY() + getHeight()));
+        getTiros().add(new Tiros(getX() + 67, getY()));
     }
 
     public Rectangle getRetangulo() {
-        return new Rectangle(x, y, width-40, height-40);
+        return new Rectangle(x + 20, y - 20, width-50, height-70);
     }
 
     public int getX() {
