@@ -76,6 +76,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         g2d.drawString("Inimigos vivos: " + inimigos.size(), 5, 15);
         g2d.drawString("Tiros: " + nave.getTiros().size(), 5, 30);
         g2d.drawString("Nível: " + nivel, 5, 45);
+
     }
 
     public void checarColisoes(){
@@ -83,8 +84,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         for (Inimigos inimigo : inimigos) {
             Rectangle retanguloInimigo = inimigo.getRetangulo();
             if (retanguloNave.intersects(retanguloInimigo)) {
-                derrota();
-            }   timer.stop();
+                derrota(inimigo);
+            }
             
             for (Tiros tiro : nave.getTiros()){
                 Rectangle retanguloTiro = tiro.getRetangulo();
@@ -121,9 +122,32 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         }
     }
 
-    public void derrota(){
-        timer.stop();
+    public void paintGameOver(Graphics g){
+        g.setColor(Color.RED);
+        g.drawString("PERDEU", 100, 1000);
+    }
+
+    public void derrota(Inimigos inimigoDerrota){
+        setBackground(Color.WHITE);
+        for (Inimigos inimigo : inimigos) {
+            if (inimigo != inimigoDerrota) {
+                inimigo.setVisible(false);
+            }
+        }
+        for (Tiros tiro : nave.getTiros()) {
+            tiro.setVisible(false);
+        }
+        ImageIcon gameOver = new ImageIcon("gameOver.png");
+        Image i = gameOver.getImage();
+        int height = i.getHeight(null);
+        int width = i.getWidth(null);
+
+        JLabel label = new JLabel(gameOver);
+        add(label);
+        Graphics2D g2d;
+        paintGameOver(getGraphics());
         
+        timer.stop();
     }
 
     @Override
