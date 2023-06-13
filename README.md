@@ -1,18 +1,14 @@
-## Getting Started
+## Space Invaders
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Jogo desenvovido inteiramente em Java, utilizando como IDE o VSCode. Simula o ambiente dos antigos jogos arcad
 
-## Folder Structure
+- Sismeta de níveis, que aumenta a dificuldade conforme os inimigos são derrotados
+- Utilização de JFrame e JPanel
 
-The workspace contains two folders by default, where:
+## Possíveis Upgrades Futuros
+- Implementação do métodos que evoluem a nave
+- Criação de inimigos diversos
+- Modo sequencial de fases
+- Criação de obstáculos
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+@Pedro0liveira
