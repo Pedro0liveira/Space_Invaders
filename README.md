@@ -11,6 +11,4 @@ Jogo desenvovido inteiramente em Java, utilizando como IDE o VSCode. Simula o am
 - Modo sequencial de fases
 - Criação de obstáculos
 
-# Arquivo para testes e visualização --> SpaceInvaders.jar
-
 @Pedro0liveira
