@@ -12,7 +12,7 @@ public class Inimigos {
         setVisible(true);
         setX(x);
         setY(y);
-        setVelocidade(1);
+        setVelocidade(3);
         ImageIcon i = new ImageIcon("inimigo.png");
         setImagem(i.getImage());
         setWidth(getImagem().getWidth(null));

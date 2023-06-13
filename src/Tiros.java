@@ -12,7 +12,7 @@ public class Tiros {
         setVisible(true);
         setX(x);
         setY(y);
-        setVelocidade(6);
+        setVelocidade(15);
         ImageIcon i = new ImageIcon("bullet.png");
         setImagem(i.getImage());
         setWidth(getImagem().getWidth(null));
